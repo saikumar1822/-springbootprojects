@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>CustomizedResponseEntityExceptionHandler.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">BankingApp</a> &gt; <a href="index.source.html" class="el_package">com.hcl.Exception</a> &gt; <span class="el_source">CustomizedResponseEntityExceptionHandler.java</span></div><h1>CustomizedResponseEntityExceptionHandler.java</h1><pre class="source lang-java linenums">package com.hcl.Exception;
+
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
+
+import javax.validation.ConstraintViolationException;
+
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.MethodArgumentNotValidException;
+import org.springframework.web.bind.annotation.ControllerAdvice;
+import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.context.request.WebRequest;
+import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
+
+import com.mysql.cj.protocol.Message;
+
+@ControllerAdvice
+<span class="nc" id="L24">public class CustomizedResponseEntityExceptionHandler extends ResponseEntityExceptionHandler {</span>
+	
+	
+	protected ResponseEntity&lt;Object&gt; handleMethodArgumentNotValid(MethodArgumentNotValidException ex,
+			HttpHeaders headers,HttpStatus status,WebRequest request){
+<span class="nc" id="L29">		Map&lt;String,Object&gt; body=new LinkedHashMap&lt;String, Object&gt;();</span>
+<span class="nc" id="L30">		body.put(&quot;timestamp&quot;, LocalDate.now());</span>
+<span class="nc" id="L31">		body.put(&quot;status&quot;, status.value());</span>
+<span class="nc" id="L32">		List&lt;String&gt; errors=ex.getBindingResult().getFieldErrors().stream()</span>
+<span class="nc" id="L33">				.map(x -&gt; x.getDefaultMessage()).collect(Collectors.toList());</span>
+<span class="nc" id="L34">		body.put(&quot;errors&quot;, errors);</span>
+<span class="nc" id="L35">		return new ResponseEntity&lt;Object&gt;(body,HttpStatus.BAD_REQUEST);</span>
+	}
+	
+	@ExceptionHandler(AccountNotFound.class)
+	public ResponseEntity&lt;Object&gt; AccountNotFound(AccountNotFound ex, WebRequest request) {
+
+<span class="nc" id="L41">		Map&lt;String, Object&gt; body = new LinkedHashMap&lt;&gt;();</span>
+<span class="nc" id="L42">		body.put(&quot;TIMESTAmp &quot;, LocalDateTime.now());</span>
+<span class="nc" id="L43">		body.put(&quot;message&quot;, &quot;No Account data found with given account number&quot;);</span>
+<span class="nc" id="L44">		body.put(&quot;status&quot;, HttpStatus.NOT_FOUND);</span>
+
+<span class="nc" id="L46">		body.put(&quot;stackTrace&quot;, ex.getClass());</span>
+<span class="nc" id="L47">		return new ResponseEntity&lt;&gt;(body, HttpStatus.NOT_FOUND);</span>
+	}
+
+	@ExceptionHandler(BanificiaryNotFoundException.class)
+	public ResponseEntity&lt;Object&gt; DataNotFoundException(BanificiaryNotFoundException ex, WebRequest request) {
+
+<span class="nc" id="L53">		Map&lt;String, Object&gt; body = new LinkedHashMap&lt;&gt;();</span>
+<span class="nc" id="L54">		body.put(&quot;timestamp&quot;, LocalDateTime.now());</span>
+<span class="nc" id="L55">		body.put(&quot;message&quot;, &quot;No Banificiarydata found with given account number&quot;);</span>
+
+<span class="nc" id="L57">		return new ResponseEntity&lt;&gt;(body, HttpStatus.NOT_FOUND);</span>
+	}
+    
+	
+	@ExceptionHandler(UserNotfoundException.class)
+	public ResponseEntity&lt;Object&gt; exception(UserNotfoundException exception) {
+<span class="nc" id="L63">		Map&lt;String, Object&gt; body = new LinkedHashMap&lt;&gt;();</span>
+<span class="nc" id="L64">		body.put(&quot;timestamp&quot;, LocalDateTime.now());</span>
+<span class="nc" id="L65">		body.put(&quot;message&quot;,exception.getMessage());</span>
+<span class="nc" id="L66">		return new ResponseEntity&lt;&gt;(body, HttpStatus.NOT_FOUND);</span>
+	}
+	
+	
+	@ExceptionHandler(InSufficientBalanceInAccount.class)
+	public ResponseEntity&lt;Object&gt; InSufficientBalanceInAccount(InSufficientBalanceInAccount ex, WebRequest request) {
+
+<span class="nc" id="L73">		Map&lt;String, Object&gt; body = new LinkedHashMap&lt;&gt;();</span>
+<span class="nc" id="L74">		body.put(&quot;TIMESTAmp &quot;, LocalDateTime.now());</span>
+<span class="nc" id="L75">		body.put(&quot;message&quot;, &quot;no sufficient balance in the Account Plese check the balance and try again&quot;);</span>
+<span class="nc" id="L76">		body.put(&quot;status&quot;, HttpStatus.BAD_REQUEST);</span>
+
+<span class="nc" id="L78">		body.put(&quot;stackTrace&quot;, ex.getClass());</span>
+<span class="nc" id="L79">		return new ResponseEntity&lt;&gt;(body, HttpStatus.BAD_REQUEST);</span>
+	}
+	
+	
+	
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.3.201901230119</span></div></body></html>

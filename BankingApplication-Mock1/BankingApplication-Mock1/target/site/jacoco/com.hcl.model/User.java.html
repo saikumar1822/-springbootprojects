@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>User.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">BankingApp</a> &gt; <a href="index.source.html" class="el_package">com.hcl.model</a> &gt; <span class="el_source">User.java</span></div><h1>User.java</h1><pre class="source lang-java linenums">package com.hcl.model;
+
+import java.util.Date;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+import javax.persistence.UniqueConstraint;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Past;
+import javax.validation.constraints.Size;
+
+@Entity
+@Table(name = &quot;user&quot;, uniqueConstraints = { @UniqueConstraint(columnNames = &quot;aadhar_no&quot;) })
+public class User {
+
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	private Long customerId;
+	@Size(min = 3, max = 25, message = &quot;the custometr name is size 3  to 9&quot;)
+	private String customerName;
+	@Past
+	@Temporal(TemporalType.DATE)
+	private Date DOB;
+	private String password;
+	private String gender;
+	@Size(min = 10, max = 10, message = &quot;the Phone number should have only 10 digits&quot;)
+	private String phone;
+	@Column(name = &quot;aadhar_no&quot;, unique = true)
+	private Long aadharNo;
+	@NotEmpty(message = &quot;Occupation Should not be blank&quot;)
+	private String occupation;
+	@NotEmpty(message = &quot;Address Should not be blank&quot;)
+	private String address;
+
+	public User() {
+<span class="fc" id="L41">		super();</span>
+<span class="fc" id="L42">	}</span>
+
+	public User(Long customerId, String customerName, Date dOB, String password, String gender, String phone,
+			Long aadharNo, String occupation, String address) {
+<span class="nc" id="L46">		super();</span>
+<span class="nc" id="L47">		this.customerId = customerId;</span>
+<span class="nc" id="L48">		this.customerName = customerName;</span>
+<span class="nc" id="L49">		DOB = dOB;</span>
+<span class="nc" id="L50">		this.password = password;</span>
+<span class="nc" id="L51">		this.gender = gender;</span>
+<span class="nc" id="L52">		this.phone = phone;</span>
+<span class="nc" id="L53">		this.aadharNo = aadharNo;</span>
+<span class="nc" id="L54">		this.occupation = occupation;</span>
+<span class="nc" id="L55">		this.address = address;</span>
+<span class="nc" id="L56">	}</span>
+
+	public User(Long customerId, String customerName, String password, String gender, String phone, String occupation,
+			String address) {
+<span class="fc" id="L60">		super();</span>
+<span class="fc" id="L61">		this.customerId = customerId;</span>
+<span class="fc" id="L62">		this.customerName = customerName;</span>
+<span class="fc" id="L63">		this.password = password;</span>
+<span class="fc" id="L64">		this.gender = gender;</span>
+<span class="fc" id="L65">		this.phone = phone;</span>
+<span class="fc" id="L66">		this.occupation = occupation;</span>
+<span class="fc" id="L67">		this.address = address;</span>
+<span class="fc" id="L68">	}</span>
+
+	public User(Long customerId, String password) {
+<span class="fc" id="L71">		super();</span>
+<span class="fc" id="L72">		this.customerId = customerId;</span>
+<span class="fc" id="L73">		this.password = password;</span>
+<span class="fc" id="L74">	}</span>
+
+
+	public Long getCustomerId() {
+<span class="fc" id="L78">		return customerId;</span>
+	}
+
+	public void setCustomerId(Long customerId) {
+<span class="fc" id="L82">		this.customerId = customerId;</span>
+<span class="fc" id="L83">	}</span>
+
+	public String getCustomerName() {
+<span class="nc" id="L86">		return customerName;</span>
+	}
+
+	public void setCustomerName(String customerName) {
+<span class="nc" id="L90">		this.customerName = customerName;</span>
+<span class="nc" id="L91">	}</span>
+
+	public Date getDOB() {
+<span class="nc" id="L94">		return DOB;</span>
+	}
+
+	public void setDOB(Date dOB) {
+<span class="nc" id="L98">		DOB = dOB;</span>
+<span class="nc" id="L99">	}</span>
+
+	public String getPassword() {
+<span class="fc" id="L102">		return password;</span>
+	}
+
+	public void setPassword(String password) {
+<span class="fc" id="L106">		this.password = password;</span>
+<span class="fc" id="L107">	}</span>
+
+	public String getGender() {
+<span class="nc" id="L110">		return gender;</span>
+	}
+
+	public void setGender(String gender) {
+<span class="nc" id="L114">		this.gender = gender;</span>
+<span class="nc" id="L115">	}</span>
+
+	public String getPhone() {
+<span class="nc" id="L118">		return phone;</span>
+	}
+
+	public void setPhone(String phone) {
+<span class="nc" id="L122">		this.phone = phone;</span>
+<span class="nc" id="L123">	}</span>
+
+	public Long getAadharNo() {
+<span class="nc" id="L126">		return aadharNo;</span>
+	}
+
+	public void setAadharNo(Long aadharNo) {
+<span class="nc" id="L130">		this.aadharNo = aadharNo;</span>
+<span class="nc" id="L131">	}</span>
+
+	public String getOccupation() {
+<span class="nc" id="L134">		return occupation;</span>
+	}
+
+	public void setOccupation(String occupation) {
+<span class="nc" id="L138">		this.occupation = occupation;</span>
+<span class="nc" id="L139">	}</span>
+
+	public String getAddress() {
+<span class="nc" id="L142">		return address;</span>
+	}
+
+	public void setAddress(String address) {
+<span class="nc" id="L146">		this.address = address;</span>
+<span class="nc" id="L147">	}</span>
+
+	@Override
+	public String toString() {
+<span class="nc" id="L151">		return &quot;User [customerId=&quot; + customerId + &quot;, customerName=&quot; + customerName + &quot;, DOB=&quot; + DOB + &quot;, password=&quot;</span>
+				+ password + &quot;, gender=&quot; + gender + &quot;, phone=&quot; + phone + &quot;, aadharNo=&quot; + aadharNo + &quot;, occupation=&quot;
+				+ occupation + &quot;, address=&quot; + address + &quot;]&quot;;
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.3.201901230119</span></div></body></html>

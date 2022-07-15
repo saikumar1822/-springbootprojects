@@ -11,7 +11,7 @@
 		<maven.compiler.source>1.8</maven.compiler.source>
 		<failOnMissingWebXml>false</failOnMissingWebXml>
 		<spring.version>5.1.1.RELEASE</spring.version>
-		<jackson.databind-version>2.9.0</jackson.databind-version>
+		<jackson.databind-version>2.12.6.1</jackson.databind-version>
 		<junit.version>4.12</junit.version>
 		<servlet.version>3.1.0</servlet.version>
 		<mysql.connector.version>8.0.19</mysql.connector.version>
